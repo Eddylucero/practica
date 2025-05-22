@@ -1,0 +1,69 @@
+{% extends "plantilla.html" %}
+{% block contenido %}
+
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: "CONFIRMACIÓN",
+            text: "¿Está seguro de eliminar este TIENDA?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "eliminarTienda/" + id;
+            }
+        });
+    }
+</script>
+
+<br>
+<h1 class="text-center">Listado de Tienda</h1>
+<hr>
+
+<div class="row">
+    <div class="text-end">
+        <a href="{% url 'nuevaTienda' %}" class="btn btn-outline-success text-right">
+            Agregar Tienda
+        </a>        
+    </div>
+</div>
+<br>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr class="bg-info">
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>DIRECCION</th>
+            <th>TELEFONO</th>
+            <th>EMAIL</th>
+            <th>FECHA</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for perro in perros %}
+            <tr>
+                <td>{{ perro.id }}</td>
+                <td>{{ perro.nombre }}</td>
+                <td>{{ perro.direccion }}</td>
+                <td>{{ perro.telefono }}</td>
+                <td>{{ perro.email }}</td>
+                <td>{{ perro.fecha }}</td>
+                <td>
+                    <a href="{% url 'editarTienda' perro.id %}" class="btn btn-outline-warning">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                    <a href="#" onclick="confirmDelete('{{ perro.id }}')" class="btn btn-outline-danger">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
